@@ -30,7 +30,10 @@ def isWinner(bo, le):
     (bo[3] == le and bo[5] == le and bo[7] == le)
 
 def playerMove():
-    pass
+    run = True
+    while run:
+        move = input('Please select a position to place an \'X\' (1-9): ')
+
 
 def compMove():
     pass
@@ -39,9 +42,31 @@ def selectRandom(board):
     pass
 
 def isBoardFull(board):
-    pass
+    if board.count(' ') > 1:
+        return True
+    else:
+        return False
 
 def main():
-    pass
+    print('Welcome to Tic Tac Toe!')
+    printBoard()
+
+    while not(isBoardFull (board)):
+        if not(isWinner(board, 'O')):
+            playerMove()
+            printBoard()
+        else:
+            print('Sorry, O\'s won this game!')
+            break
+
+        if not (isWinner(board, 'X')):
+            compMove()
+            printBoard()
+        else:
+            print('X\'s won this game! Good Job!')
+            break
+
+    if isBoardFull (board):
+        print('Tie Game!')
 
 main()
