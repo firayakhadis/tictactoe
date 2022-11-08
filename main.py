@@ -20,14 +20,7 @@ def printBoard(board):
     print('   |   |')
 
 def isWinner(bo, le):
-    return (bo[7] == le and bo[8] == le and bo[9] == le) or
-    (bo[4] == le and bo[5] == le and bo[6] == le) or
-    (bo[1] == le and bo[2] == le and bo[3] == le) or
-    (bo[1] == le and bo[4] == le and bo[7] == le) or
-    (bo[2] == le and bo[5] == le and bo[8] == le) or
-    (bo[3] == le and bo[6] == le and bo[6] == le) or
-    (bo[1] == le and bo[5] == le and bo[9] == le) or
-    (bo[3] == le and bo[5] == le and bo[7] == le)
+    return (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or (bo[1] == le and bo[2] == le and bo[3] == le) or (bo[1] == le and bo[4] == le and bo[7] == le) or (bo[2] == le and bo[5] == le and bo[8] == le) or (bo[3] == le and bo[6] == le and bo[6] == le) or (bo[1] == le and bo[5] == le and bo[9] == le) or (bo[3] == le and bo[5] == le and bo[7] == le)
 
 def playerMove():
     run = True
@@ -57,24 +50,50 @@ def compMove():
             if isWinner(boardCopy, let):
                 move = i
                 return move
+    cornersOpen = []
+    for i in possibleMoves:
+        if i in [1,3,7,9]:
+            cornersOpen.append(i)
 
-def selectRandom(board):
-    pass
+    if len(cornersOpen) > 0:
+        move = selectRandom(cornersOpen)
+        return move
+
+    if 5 in possibleMoves:
+        move = 5
+        return move
+
+    edgesOpen = []
+    for i in possibleMoves:
+        if i in [2, 4, 6, 8]:
+            edgesOpen.append(i)
+
+    if len(edgesOpen) > 0:
+        move = selectRandom(edgesOpen)
+
+    return move
+
+
+def selectRandom(li):
+    import random
+    ln = len(li)
+    r = random.randrange(0, ln)
+    return li[r]
 
 def isBoardFull(board):
     if board.count(' ') > 1:
-        return True
-    else:
         return False
+    else:
+        return True
 
 def main():
     print('Welcome to Tic Tac Toe!')
-    printBoard()
+    printBoard(board)
 
     while not(isBoardFull (board)):
         if not(isWinner(board, 'O')):
             playerMove()
-            printBoard()
+            printBoard(board)
         else:
             print('Sorry, O\'s won this game!')
             break
@@ -84,9 +103,9 @@ def main():
             if move == 0:
                 print('Tie Game!')
             else:
-                insertLetter('O', board)
+                insertLetter('O', move)
                 print('Computer placed an \'O\' in position', move , ':')
-                printBoard()
+                printBoard(board)
         else:
             print('X\'s won this game! Good Job!')
             break
