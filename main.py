@@ -113,4 +113,6 @@ def main():
     if isBoardFull (board):
         print('Tie Game!')
 
-main()
+while True:
+    input('Play again?')
+    main()
