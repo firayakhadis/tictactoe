@@ -40,14 +40,23 @@ def playerMove():
                     run = False
                     insertLetter('X', move)
                 else:
-                    print('Soory, this space is occupied!')
+                    print('Sorry, this space is occupied!')
             else:
                 print('Please type a number within the range!')
         except:
             print('Please type a number!')
 
 def compMove():
-    pass
+    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
+    move = 0
+
+    for let in ['O', 'X']:
+        for i in possibleMoves:
+            boardCopy = board[:]
+            boardCopy[i] = let
+            if isWinner(boardCopy, let):
+                move = i
+                return move
 
 def selectRandom(board):
     pass
@@ -71,8 +80,13 @@ def main():
             break
 
         if not (isWinner(board, 'X')):
-            compMove()
-            printBoard()
+            move = compMove()
+            if move == 0:
+                print('Tie Game!')
+            else:
+                insertLetter('O', board)
+                print('Computer placed an \'O\' in position', move , ':')
+                printBoard()
         else:
             print('X\'s won this game! Good Job!')
             break
